@@ -1,0 +1,448 @@
+/*!
+ * @author Mohamed Muntasir
+ * @link https://github.com/devmotheg
+ */
+
+/* General */
+
+:root {
+  --main-bg-color: #1a1a1a;
+  --main-font-color: white;
+  --light-white: #eee;
+  --light-black: #111;
+  --light-yellow: rgb(243, 168, 47);
+  --font-body-stack: 'Times New Roman', Times, serif
+  --font-heading-stack: 'Times New Roman', Times, serif;
+  font-size: 16px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: 0.2s;
+}
+
+::selection {
+  background-color: var(--light-yellow);
+  color: var(--light-black);
+}
+
+body {
+  background-color: var(--main-bg-color);
+  background-size: 17.4%;
+  min-width: 400px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+ul:not(.how) {
+  display: flex;
+  list-style-type: none;
+  justify-content: center;
+}
+
+a {
+  text-decoration: none;
+  text-align: center;
+  color: var(--light-yellow);
+  display: block;
+  width: fit-content;
+  margin: auto;
+}
+
+a:hover {
+  text-shadow: 1px 1px 6px var(--light-yellow);
+}
+
+/* Container */
+
+.container {
+  width: 90%;
+  max-width: 768px;
+  margin: 1rem auto;
+}
+
+/* Hangman */
+
+.--transition {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.--result {
+  font-size: 1.8rem !important;
+  line-height: 1.6;
+}
+
+.hangman__stats {
+  color: var(--light-white);
+  font-family: var(--font-body-stack);
+  font-size: 18px;
+  padding: 18px;
+}
+
+.hangman__title {
+  font-family: var(--font-heading-stack);
+  text-align: center;
+  color: var(--light-yellow);
+  font-size: 3rem;
+  padding: 10px;
+  text-shadow: 1px 1px 6px var(--light-yellow);
+}
+
+.hangman__board {
+  display: block;
+  margin: 2.6rem auto;
+  transform: scale(1.3);
+}
+
+.hangman__board .fixed * {
+  stroke-width: 12.8;
+  stroke-linecap: square;
+  stroke: white;
+}
+
+.hangman__board .movable {
+  transform: translateX(-9%);
+}
+
+.hangman__board .movable g {
+  stroke-width: 0.8;
+  stroke-dasharray: 146;
+  stroke-dashoffset: 190;
+  fill: transparent;
+  stroke: var(--light-yellow);
+}
+
+.hangman__board .rope {
+  transform: scale(0.7) translate(194px, -22px);
+  fill: var(--main-bg-color) !important;
+}
+
+g.--drawn {
+  animation: draw 1s linear;
+  animation-fill-mode: both;
+}
+
+@keyframes draw {
+  50% {
+    stroke-dasharray: 295;
+  }
+  100% {
+    stroke-dasharray: 295;
+    fill: white;
+  }
+}
+
+.hangman__board--end .head,
+.hangman__board--end .torso,
+.hangman__board--end .movable {
+  animation: 1.5s infinite alternate ease-in-out;
+}
+
+.hangman__board--end .left-arm-lower,
+.hangman__board--end .left-arm-upper,
+.hangman__board--end .right-arm-lower,
+.hangman__board--end .right-arm-upper {
+  animation: 0.25s infinite alternate ease-in-out;
+}
+
+.hangman__board--end .left-leg-lower,
+.hangman__board--end .left-leg-upper,
+.hangman__board--end .right-leg-lower,
+.hangman__board--end .right-leg-upper {
+  animation: 0.6s infinite alternate ease-in-out;
+}
+
+.hangman__board .left-arm-lower,
+.hangman__board .left-arm-upper,
+.hangman__board .right-leg-lower,
+.hangman__board .right-leg-upper {
+  animation-delay: 0.3s;
+}
+
+.hangman__board--end .movable {
+  animation-name: swing;
+}
+
+@keyframes swing {
+  50% {
+    transform: rotate(-5deg) translate(-4%, 10%);
+  }
+  100% {
+    transform: rotate(5deg) translate(-14%, -7%);
+  }
+}
+
+.hangman__board--end .head {
+  animation-name: head-shake;
+}
+
+@keyframes head-shake {
+  50% {
+    transform: translateX(1px)
+  }
+  100% {
+    transform: translateX(-1px)
+  }
+}
+
+.hangman__board--end .torso {
+  animation-name: torso-shake;
+}
+
+@keyframes torso-shake {
+  50% {
+    transform: rotate(0.3deg);
+  }
+  100% {
+    transform: rotate(-0.1deg) translateY(1px);
+  }
+}
+
+.hangman__board .right-arm-lower {
+  transform-origin: 178px 67px;
+  transform: rotate(68deg);
+}
+
+.hangman__board--end .right-arm-lower {
+  animation-name: right-arm-lower-shake;
+}
+
+.hangman__board .right-arm-upper {
+  transform-origin: 178px 67px;
+  transform: rotate(98deg);
+}
+
+.hangman__board--end .right-arm-upper {
+  animation-name: right-arm-upper-shake;
+}
+
+@keyframes right-arm-lower-shake {
+  to {
+    transform: rotate(68deg) translateY(-1px);
+  }
+}
+
+@keyframes right-arm-upper-shake {
+  to {
+    transform: rotate(99deg) translateY(-1px);
+  }
+}
+
+.hangman__board .left-arm-lower {
+  transform-origin: 178px 67px;
+  transform: rotate(-68deg);
+}
+
+.hangman__board--end .left-arm-lower {
+  animation-name: left-arm-lower-shake;
+}
+
+.hangman__board .left-arm-upper {
+  transform-origin: 178px 67px;
+  transform: rotate(-98deg);
+}
+
+.hangman__board--end .left-arm-upper {
+  animation-name: left-arm-upper-shake;
+}
+
+@keyframes left-arm-lower-shake {
+  to {
+    transform: rotate(-68deg) translateY(1px);
+  }
+}
+
+@keyframes left-arm-upper-shake {
+  to {
+    transform: rotate(-97deg) translateY(1px);
+  }
+}
+
+.hangman__board .right-leg-lower {
+  transform-origin: 178px 122px;
+  transform: rotate(-15deg);
+}
+
+.hangman__board--end .right-leg-lower {
+  animation-name: right-leg-lower-shake;
+}
+
+.hangman__board .right-leg-upper {
+  transform-origin: 178px 122px;
+  transform: rotate(30deg);
+}
+
+.hangman__board--end .right-leg-upper {
+  animation-name: right-leg-upper-shake;
+}
+
+@keyframes right-leg-lower-shake {
+  to {
+    transform: rotate(-5deg) translate(-2px, -1px);
+  }
+}
+
+@keyframes right-leg-upper-shake {
+  to {
+    transform: rotate(40deg) translate(-2px)
+  }
+}
+
+.hangman__board .left-leg-lower {
+  transform-origin: 173px 121px;
+  transform: rotate(10deg);
+}
+
+.hangman__board--end .left-leg-lower {
+  animation-name: left-leg-lower-shake;
+}
+
+.hangman__board .left-leg-upper {
+  transform-origin: 178px 122px;
+  transform: rotate(-30deg);
+}
+
+.hangman__board--end .left-leg-upper {
+  animation-name: left-leg-upper-shake;
+}
+
+@keyframes left-leg-lower-shake {
+  to {
+    transform: rotate(20deg) translate(-1px, 1px);
+    transform-origin: 180px 124px;
+  }
+}
+
+@keyframes left-leg-upper-shake {
+  to {
+    transform: rotate(-26deg) translate(-1px, 0px)
+  }
+}
+
+.hangman__word {
+  color: var(--main-font-color);
+  font-size: 2.2rem;
+  text-align: center;
+  margin: 2rem 0 2rem;
+  letter-spacing: 0.6rem;
+}
+
+.hangman__word li {
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+.hangman__text {
+  font-family: var(--font-body-stack);
+  text-align: center;
+  color: var(--light-yellow);
+  font-style: italic;
+  font-size: 20px;
+  padding: 8px;
+  text-shadow: 1px 1px 6px var(--light-yellow);
+}
+
+.hangman__hint {
+  font-family: var(--font-body-stack);
+  text-align: center;
+  color: var(--light-white);
+  padding: 8px;
+}
+
+.hangman__letters {
+  color: var(--main-font-color);
+  max-width: 580px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.hangman__letter {
+  font-family: var(--font-body-stack);
+  padding: 0.2rem 0.2rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 4px;
+  margin: 10px 5px 0;
+  color: var(--light-white);
+  border: 2px solid var(--light-white);
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.hangman__letter:hover {
+  border: 2px solid var(--light-yellow);
+  cursor: pointer;
+}
+
+.hangman__letter--correct {
+  animation-name: guessed;
+  animation-duration: 0.3s;
+  animation-fill-mode: backwards;
+  animation-direction: reverse;
+}
+
+@keyframes guessed {
+  25% {
+    transform: rotate(20deg) translateY(-1px);
+  }
+  50% {
+    transform: rotate(-20deg) translateY(-2px);
+  }
+  75% {
+    transform: rotate(20deg) translateY(-3px);
+  }
+  100% {
+    transform: rotate(-20deg) translateY(-4px);
+    color: var(--light-yellow);
+  }
+}
+
+.button {
+  letter-spacing: inherit;
+  text-transform: inherit;
+  font-family: var(--font-body-stack);
+  font-size: 1.4rem;
+  font-weight: bold;
+  display: block;
+  margin: 2rem auto;
+  padding: 0.8rem 1.2rem;
+  background: transparent;
+  color: var(--light-white);
+  cursor: pointer;
+  border-radius: 2px;
+  border: none;
+  box-shadow: -1px -1px 4px var(--light-white);
+}
+
+.button:focus {
+  outline: 0;
+  box-shadow: 1px 1px 4px var(--light-yellow);
+}
+
+/* How */
+
+.how {
+  line-height: 2;
+  padding: 1rem 1.8rem;
+  font-family: var(--font-body-stack);
+  color: (--ligt-white);
+  text-align: center;
+  list-style-type: none;
+}
+
+.how li::before {
+  content: "";
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent var(--light-yellow);
+  margin-right: 10px;
+}
+
+.how li {
+  color: var(--light-white);
+  text-align: left;
+  padding: 10px;
+}
