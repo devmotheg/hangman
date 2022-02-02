@@ -23,7 +23,7 @@ const How = (_ => {
     <ul class="how">
       <li>When you start a new game, the game will automatically choose a random word for you.</li>
       <li>Your job is to guess the chosen word within 7 tries...</li>
-      <li>If you win, you get to live, else... you will be hanged to death! (will... not really, lol.)</li>
+      <li>If you win, you get to live, else... you will be hanged to death! (well... not really, lol.)</li>
     </ul>
     <button class="button menu">Main menu</button>
     <a href="https://github.com/devmotheg">Designed by Mohamed Muntasir</a>
